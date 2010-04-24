@@ -1,9 +1,9 @@
 #!/usr/bin/perl -s
 #
-# solo v1.4
+# solo v1.5
 # Prevents multiple cron instances from running simultaneously.
 #
-# Copyright 2007-2009 Timothy Kay
+# Copyright 2007-2010 Timothy Kay
 # http://timkay.com/solo/
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -22,14 +22,20 @@
 
 use Socket;
 
-$port =~ /^\d+$/						or die "Usage: $0 -port=PORT COMMAND\n";
-$addr = pack(CnC, 127, $<, 1);
-print "solo: bind ", join(".", unpack(C4, $addr)), ":$port\n"	if $verbose;
+alarm $timeout								if $timeout;
 
-$^F = 10;			# unset close-on-exec
+$port =~ /^\d+$/ or $noport						or die "Usage: $0 -port=PORT COMMAND\n";
 
-socket(SOLO, PF_INET, SOCK_STREAM, getprotobyname('tcp'))	or die "socket: $!";
-bind(SOLO, sockaddr_in($port, $addr))				or $silent? exit: die "solo($port): $!\n";
+if ($port)
+{
+    $addr = pack(CnC, 127, $<, 1);
+    print "solo: bind ", join(".", unpack(C4, $addr)), ":$port\n"	if $verbose;
+
+    $^F = 10;			# unset close-on-exec
+
+    socket(SOLO, PF_INET, SOCK_STREAM, getprotobyname('tcp'))		or die "socket: $!";
+    bind(SOLO, sockaddr_in($port, $addr))				or $silent? exit: die "solo($port): $!\n";
+}
 
 sleep $sleep if $sleep;
 
