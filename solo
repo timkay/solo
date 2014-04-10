@@ -1,6 +1,6 @@
 #!/usr/bin/perl -s
 #
-# solo v1.6
+# solo v1.7
 # Prevents multiple cron instances from running simultaneously.
 #
 # Copyright 2007-2013 Timothy Kay
@@ -36,4 +36,7 @@ if ($port)
 
 sleep $sleep if $sleep;
 
-exec @ARGV;
+unless(fork) {
+    exec @ARGV;
+}
+wait;
