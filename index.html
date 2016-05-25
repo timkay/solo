@@ -35,7 +35,7 @@ has finished.  (Of course, you can use different parameters, if it
 doesn't have to run it every minute.)
 <p>
 Port 3801 in the example is an arbitrary TCP port number that isn't
-used elsewhere.  (solo works by binding to 127.x.y.126:port.  If the
+used elsewhere.  (solo works by binding to 127.x.y.1:port.  If the
 chosen port is not free, then a previous instance must still be running, and the job is aborted.)
 Make sure to use a different port number for each job, or they will
 prevent each other from running.  If you aren't running as root, the
@@ -43,9 +43,14 @@ port number should be above 1023.  The maximum allowed port number
 is 65535.
 <p>
 
-The loopback IP address 127.x.y.126 is used, where xy is the uid.
+The loopback IP address 127.x.y.1 is used, where xy is the uid.
 This way, different users will never use the same ports even if they
 use the same port numbers.
+
+<p>
+(NOTE: OpenBSD doesn't allow 127.x.y.1 IP addresses. See the comment in the
+code, which changes the IP address to 127.0.0.1. It will work, but it will
+interlock between users. Thanks <a href="www.gotati.com">www.gotati.com</a>.)
 <p>
 The -silent switch tells solo to silently terminate when a previous
 instance is already running.  Without -silent, a message is printed to
