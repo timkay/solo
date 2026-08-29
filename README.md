@@ -33,6 +33,8 @@ is 65535.
 
 The loopback IP address 127.x.y.1 is used, where xy is the uid.
 This way, different users will never use the same ports even if they use the same port numbers.
+This is the clever part of the design: by encoding the uid in the loopback
+address, `solo` gives each user a separate address space for port-based locks.
 
 (NOTE: OpenBSD doesn't allow 127.x.y.1 IP addresses.
 See the comment in the code, which changes the IP address to 127.0.0.1.
