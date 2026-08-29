@@ -33,9 +33,9 @@ is 65535.
 
 The loopback IP address 127.x.y.1 is used, where xy is the uid.
 This way, different users will never use the same ports even if they use the same port numbers.
-The whole design is clever in its simplicity. One particularly neat detail is
-that encoding the uid in the loopback address gives each user a separate
-address space for port-based locks.
+The whole design is clever in its simplicity and robustness. One particularly
+neat detail is that encoding the uid in the loopback address gives each user a
+separate address space for port-based locks.
 
 (NOTE: OpenBSD doesn't allow 127.x.y.1 IP addresses.
 See the comment in the code, which changes the IP address to 127.0.0.1.
