@@ -1,4 +1,4 @@
-# solo - prevent simultaneous instances of a *nix job
+# solo - prevent simultaneous instances of a cron job
 
 solo is a very simple script (10 lines) that prevents a program from running more than one copy at a time.  It is useful with cron to make sure that a job doesn't run before a previous one has finished.
 
